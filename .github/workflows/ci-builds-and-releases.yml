@@ -54,7 +54,7 @@ jobs:
       - name: Get last 4 commits
         id: last_commits
         run: |
-          git log -4 --pretty=format:"- %s (%h)" > last_commits.txt
+          git log -4 --pretty=format:"%s (%h)" > last_commits.txt
           cat last_commits.txt
           safe_commits=$(cat last_commits.txt | sed 's/[\[\]()%]/\\&/g')
           echo "LAST_COMMITS=$safe_commits" >> $GITHUB_ENV
