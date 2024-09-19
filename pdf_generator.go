@@ -2,8 +2,6 @@ package main
 
 import (
     "github.com/jung-kurt/gofpdf/v2"
-    "github.com/joho/godotenv"
-    "log"
     "os"
     "strconv"
 )

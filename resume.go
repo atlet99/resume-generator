@@ -14,6 +14,7 @@ type PersonalDetails struct {
     Name     string
     Email    string
     Phone    string
+    Address  string
     Location  string
 }
 
