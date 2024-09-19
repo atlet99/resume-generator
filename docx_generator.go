@@ -2,6 +2,7 @@ package main
 
 import (
     "github.com/unidoc/unioffice/document"
+    "github.com/unidoc/unioffice/measurement"
     "os"
     "strconv"
 )
@@ -19,7 +20,7 @@ func generateResumeDocx(resume Resume, filename string) error {
     p := doc.AddParagraph()
     run := p.AddRun()
     run.AddText("Resume")
-    run.Properties().SetSize(float64(headerFontSize)) // Преобразуем int в float64
+    run.Properties().SetSize(measurement.Distance(headerFontSize))
     run.Properties().SetFontFamily(fontFamily)
 
     p = doc.AddParagraph()
