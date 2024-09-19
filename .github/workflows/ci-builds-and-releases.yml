@@ -56,7 +56,7 @@ jobs:
         run: |
           git log -4 --pretty=format:"%s (%h)" > last_commits.txt
           cat last_commits.txt
-          safe_commits=$(cat last_commits.txt | sed 's/[\[\]()%]/\\&/g')
+          safe_commits=$(cat last_commits.txt | sed 's/[\\[\\]()%]/_/g')
           echo "LAST_COMMITS=$safe_commits" >> $GITHUB_ENV
       - name: Determine next tag
         id: tag_version
