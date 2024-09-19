@@ -1,0 +1,38 @@
+Name: {{.PersonalDetails.Name}}
+Email: {{.PersonalDetails.Email}}
+Phone: {{.PersonalDetails.Phone}}
+Address: {{.PersonalDetails.Address}}
+
+Professional Summary
+--------------------
+{{.ProfessionalSummary}}
+
+Key Skills
+----------
+{{range .KeySkills}}- {{.}}
+{{end}}
+
+Work Experience
+---------------
+{{range .WorkExperience}}
+Job Title: {{.JobTitle}}
+Company: {{.Company}}
+Dates: {{.StartDate}} - {{.EndDate}}
+Description: {{.Description}}
+{{end}}
+
+Education
+---------
+{{range .Education}}
+Degree: {{.Degree}}, University: {{.University}} ({{.Year}})
+{{end}}
+
+Certifications
+--------------
+{{range .Certifications}}- {{.Title}} ({{.Year}})
+{{end}}
+
+Languages
+---------
+{{range .Languages}}- {{.}}
+{{end}}
