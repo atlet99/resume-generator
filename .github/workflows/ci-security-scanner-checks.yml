@@ -18,19 +18,25 @@ on:
 permissions:
   contents: read
 
+runner_defaults: &runner_defaults
+  runs-on: ubuntu-20.04
+
+default_permissions: &default_permissions
+  permissions:
+    contents: read
+    security-events: write
+    actions: read
+
 jobs:
-  build:
-    permissions:
-      contents: read
-      security-events: write
-      actions: read
+  trivy_scan:
+    <<: *default_permissions
     name: trivy-scans
-    runs-on: ubuntu-20.04
+    <<: *runner_defaults
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@main
       - name: Run Trivy vulnerability scanner
-        uses: aquasecurity/trivy-action@master
+        uses: aquasecurity/trivy-action@main
         with:
           scan-type: 'fs'
           scan-ref: '.'
@@ -43,3 +49,52 @@ jobs:
           sarif_file: 'trivy-results.sarif'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  snyk_scan:
+    <<: *default_permissions
+    name: snyk-scans
+    <<: *runner_defaults
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@main
+      - uses: snyk/actions/setup@main
+      - name: Get Go Version
+        run: |
+          #!/bin/bash
+          GOVERSION=$({ [ -f .go-version ] && cat .go-version; })
+          echo "GOVERSION=$GOVERSION" >> $GITHUB_ENV
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: ${{ env.GOVERSION }}
+      - name: Run Snyk to check for vulnerabilities
+        uses: snyk/actions/golang@main
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_AUTH_TOKEN }}
+        with:
+          args: --sarif-file-output=snyk-results.sarif
+      - name: Upload result to GitHub Code Scanning
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: 'snyk-results.sarif'
+  nancy_check:
+    <<: *default_permissions
+    name: nancy-check
+    <<: *runner_defaults
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@main
+      - name: Get Go Version
+        run: |
+          #!/bin/bash
+          GOVERSION=$({ [ -f .go-version ] && cat .go-version; })
+          echo "GOVERSION=$GOVERSION" >> $GITHUB_ENV
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: ${{ env.GOVERSION }}
+      - name: WriteGoList
+        run: go list -json -m all > go.list
+      - name: Nancy
+        uses: sonatype-nexus-community/nancy-github-action@main
+        with:
+          nancyVersion: "v1.0.46"
