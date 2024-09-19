@@ -42,6 +42,10 @@ jobs:
     name: Create GitHub Release
     runs-on: ubuntu-20.04
     needs: docker_build
+    permissions:
+      contents: write
+      actions: read
+      discussions: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
