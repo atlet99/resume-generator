@@ -1,4 +1,5 @@
 name: ci-security-scanner-checks
+
 on:
   push:
     branches:
