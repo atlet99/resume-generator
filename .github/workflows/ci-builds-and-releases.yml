@@ -55,8 +55,6 @@ jobs:
         id: last_commits
         run: |
           git log -4 --pretty=format:"- %s (%h)" > last_commits.txt
-          cat last_commits.txt
-          echo "LAST_COMMITS=$(cat last_commits.txt)" >> $GITHUB_ENV
       - name: Determine next tag
         id: tag_version
         run: |
@@ -92,5 +90,5 @@ jobs:
       - name: Upload source code to GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          body: ${{ env.LAST_COMMITS }}
+          body_path: last_commits.txt
           tag_name: ${{ env.TAG_NAME }}
