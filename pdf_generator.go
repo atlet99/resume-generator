@@ -8,13 +8,6 @@ import (
     "strconv"
 )
 
-func loadEnv() {
-    err := godotenv.Load()
-    if err != nil {
-        log.Fatalf("Error loading .env file")
-    }
-}
-
 func generateResumePDF(resume Resume, filename string) error {
     loadEnv()
 

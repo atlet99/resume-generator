@@ -2,18 +2,12 @@ package main
 
 import (
     "github.com/unidoc/unioffice/document"
+    "github.com/unidoc/unioffice/measurement"
     "github.com/joho/godotenv"
     "log"
     "os"
     "strconv"
 )
-
-func loadEnv() {
-    err := godotenv.Load()
-    if err != nil {
-        log.Fatalf("Error loading .env file")
-    }
-}
 
 func generateResumeDocx(resume Resume, filename string) error {
     loadEnv()
