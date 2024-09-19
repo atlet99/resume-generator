@@ -18,25 +18,19 @@ on:
 permissions:
   contents: read
 
-runner_defaults: &runner_defaults
-  runs-on: ubuntu-20.04
-
-default_permissions: &default_permissions
-  permissions:
-    contents: read
-    security-events: write
-    actions: read
-
 jobs:
   trivy_scan:
-    <<: *default_permissions
     name: trivy-scans
-    <<: *runner_defaults
+    runs-on: ubuntu-20.04
+    permissions:
+      contents: read
+      security-events: write
+      actions: read
     steps:
       - name: Checkout code
-        uses: actions/checkout@main
+        uses: actions/checkout@v4
       - name: Run Trivy vulnerability scanner
-        uses: aquasecurity/trivy-action@main
+        uses: aquasecurity/trivy-action@master
         with:
           scan-type: 'fs'
           scan-ref: '.'
@@ -49,14 +43,18 @@ jobs:
           sarif_file: 'trivy-results.sarif'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
   snyk_scan:
-    <<: *default_permissions
     name: snyk-scans
-    <<: *runner_defaults
+    runs-on: ubuntu-20.04
+    permissions:
+      contents: read
+      security-events: write
+      actions: read
     steps:
       - name: Checkout code
-        uses: actions/checkout@main
-      - uses: snyk/actions/setup@main
+        uses: actions/checkout@v4
+      - uses: snyk/actions/setup@master
       - name: Get Go Version
         run: |
           #!/bin/bash
@@ -67,7 +65,7 @@ jobs:
         with:
           go-version: ${{ env.GOVERSION }}
       - name: Run Snyk to check for vulnerabilities
-        uses: snyk/actions/golang@main
+        uses: snyk/actions/golang@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_AUTH_TOKEN }}
         with:
@@ -76,13 +74,17 @@ jobs:
         uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: 'snyk-results.sarif'
+
   nancy_check:
-    <<: *default_permissions
     name: nancy-check
-    <<: *runner_defaults
+    runs-on: ubuntu-20.04
+    permissions:
+      contents: read
+      security-events: write
+      actions: read
     steps:
       - name: Checkout code
-        uses: actions/checkout@main
+        uses: actions/checkout@v4
       - name: Get Go Version
         run: |
           #!/bin/bash
@@ -95,6 +97,6 @@ jobs:
       - name: WriteGoList
         run: go list -json -m all > go.list
       - name: Nancy
-        uses: sonatype-nexus-community/nancy-github-action@main
+        uses: sonatype-nexus-community/nancy-github-action@master
         with:
           nancyVersion: "v1.0.46"
