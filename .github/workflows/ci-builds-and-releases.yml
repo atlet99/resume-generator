@@ -28,7 +28,7 @@ jobs:
         id: vars
         run: echo "SHORT_SHA=${GITHUB_SHA::8}" >> $GITHUB_ENV
       - name: Get repo name
-        id: vars
+        id: repo_vars
         run: echo "GH_REPO_NAME=${GITHUB_REPOSITORY##*/}" >> $GITHUB_ENV
       - name: Build and Push Docker Image
         uses: docker/build-push-action@v6
