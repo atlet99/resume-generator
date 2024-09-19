@@ -8,6 +8,13 @@ import (
     "strconv"
 )
 
+func loadEnv() {
+    err := godotenv.Load()
+    if err != nil {
+        log.Fatalf("Error loading .env file")
+    }
+}
+
 func generateResumeDocx(resume Resume, filename string) error {
     loadEnv()
 
@@ -21,17 +28,12 @@ func generateResumeDocx(resume Resume, filename string) error {
     p := doc.AddParagraph()
     run := p.AddRun()
     run.AddText("Resume")
-    run.Properties().SetSize(headerFontSize)
+    run.Properties().SetSize(float64(headerFontSize)) // Преобразуем int в float64
     run.Properties().SetFontFamily(fontFamily)
 
     p = doc.AddParagraph()
     run = p.AddRun()
     run.AddText("Name: " + resume.PersonalDetails.Name)
-    run.Properties().SetFontFamily(fontFamily)
-
-    p = doc.AddParagraph()
-    run = p.AddRun()
-    run.AddText("Email: " + resume.PersonalDetails.Email)
     run.Properties().SetFontFamily(fontFamily)
 
     return doc.SaveToFile(filename)

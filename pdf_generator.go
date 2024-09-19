@@ -47,7 +47,7 @@ func generateResumePDF(resume Resume, filename string) error {
     pdf.Cell(40, 10, "Professional Summary")
     pdf.Ln(8)
     pdf.SetFont(fontFamily, "", fontSize)
-    pdf.MultiCell(0, 10, resume.ProfessionalSummary)
+    pdf.MultiCell(0, 10, resume.ProfessionalSummary, "", "", false)
 
     return pdf.OutputFileAndClose(filename)
 }
