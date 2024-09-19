@@ -2,26 +2,37 @@ package main
 
 import (
     "github.com/unidoc/unioffice/document"
+    "github.com/joho/godotenv"
+    "log"
+    "os"
+    "strconv"
 )
 
 func generateResumeDocx(resume Resume, filename string) error {
+    loadEnv()
+
     doc := document.New()
     defer doc.Close()
 
-    doc.AddParagraph().AddRun().AddText("Resume")
+    fontFamily := os.Getenv("FONT_FAMILY")
+    headerFontSizeStr := os.Getenv("DOCX_HEADER_FONT_SIZE")
+    headerFontSize, _ := strconv.Atoi(headerFontSizeStr)
 
-    doc.AddParagraph().AddRun().AddText("Name: " + resume.PersonalDetails.Name)
-    doc.AddParagraph().AddRun().AddText("Email: " + resume.PersonalDetails.Email)
-    doc.AddParagraph().AddRun().AddText("Phone: " + resume.PersonalDetails.Phone)
-    doc.AddParagraph().AddRun().AddText("Location: " + resume.PersonalDetails.Location)
+    p := doc.AddParagraph()
+    run := p.AddRun()
+    run.AddText("Resume")
+    run.Properties().SetSize(headerFontSize)
+    run.Properties().SetFontFamily(fontFamily)
 
-    doc.AddParagraph().AddRun().AddText("Professional Summary")
-    doc.AddParagraph().AddRun().AddText(resume.ProfessionalSummary)
+    p = doc.AddParagraph()
+    run = p.AddRun()
+    run.AddText("Name: " + resume.PersonalDetails.Name)
+    run.Properties().SetFontFamily(fontFamily)
 
-    doc.AddParagraph().AddRun().AddText("Key Skills")
-    for _, skill := range resume.KeySkills.Skills {
-        doc.AddParagraph().AddRun().AddText("- " + skill)
-    }
+    p = doc.AddParagraph()
+    run = p.AddRun()
+    run.AddText("Email: " + resume.PersonalDetails.Email)
+    run.Properties().SetFontFamily(fontFamily)
 
     return doc.SaveToFile(filename)
 }
