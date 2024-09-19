@@ -1,4 +1,4 @@
-name: ci-aqua-security-trivy-tests
+name: ci-security-scanner-checks
 on:
   push:
     branches:
