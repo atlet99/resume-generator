@@ -61,7 +61,7 @@ jobs:
           echo "Latest tag: $latest_tag"
           
           IFS='.' read -r major minor patch <<<"${latest_tag#v}"
-
+          
           if [ "$latest_tag" = "0.0.0" ]; then
             new_tag="v0.0.1"
           else
@@ -76,11 +76,11 @@ jobs:
                 major=$((major + 1))
               fi
             fi
-            # Construct the new version
             new_tag="v$major.$minor.$patch"
           fi
           
           echo "New tag: $new_tag"
+
           echo "TAG_NAME=$new_tag" >> $GITHUB_ENV
       - name: Create and push new tag
         run: |
