@@ -38,6 +38,14 @@ jobs:
           push: true
           platforms: 'linux/amd64,linux/arm64'
           labels: ${{ github.github_repository }}
+      - name: Build and Push with latest tag
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          tags: ${{ secrets.DOCKER_USERNAME }}/${{ env.GH_REPO_NAME }}:latest
+          push: true
+          platforms: 'linux/amd64,linux/arm64'
+          labels: ${{ github.github_repository }}
   release:
     name: Create GitHub Release
     runs-on: ubuntu-20.04
