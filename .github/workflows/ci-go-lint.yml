@@ -10,7 +10,7 @@ on:
   schedule:
     - cron: "0 0 * * *"
 jobs:
-  go-lint:
+  go_lint:
     if: github.event.pull_request.draft == false
     name: lint
     runs-on: ubuntu-20.04
