@@ -26,7 +26,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
       - name: Get short SHA
         id: vars
-        run: echo "SHORT_SHA=${GITHUB_SHA::8}" >> $GITHUB_ENV
+        run: echo "SHORT_SHA=$(git rev-parse --short ${{ github.sha }})" >> $GITHUB_ENV
       - name: Get repo name
         id: repo_vars
         run: echo "GH_REPO_NAME=${GITHUB_REPOSITORY##*/}" >> $GITHUB_ENV
