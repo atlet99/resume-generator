@@ -1,4 +1,4 @@
-# Resume Generator
+# Resume Generator [![Docker Image Version](https://img.shields.io/docker/v/zetfolder17/resume-generator?label=Docker%20Image&sort=semver)](https://hub.docker.com/r/zetfolder17/resume-generator) [![CI](https://github.com/atlet99/resume-generator/actions/workflows/ci-builds-and-releases.yml/badge.svg)](https://github.com/atlet99/resume-generator/actions/workflows/ci-builds-and-releases.yml) [![Go Report Card](https://goreportcard.com/badge/github.com/atlet99/resume-generator)](https://goreportcard.com/report/github.com/atlet99/resume-generator) [![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/atlet99/resume-generator/badge)](https://securityscorecards.dev/viewer/?uri=github.com/atlet99/resume-generator)
 
 This project is a simple resume generator built using Golang. It allows you to create resumes in DOCX and PDF formats based on predefined templates.
 
