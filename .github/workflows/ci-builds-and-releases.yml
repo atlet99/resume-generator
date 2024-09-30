@@ -54,8 +54,8 @@ jobs:
       - name: Get last 4 commits
         id: last_commits
         run: |
-          echo "Changelogs: "
-          git log -4 --pretty=format:"- %s (%h)" > last_commits.txt
+          printf "Changelogs:\n" > last_commits.txt
+          git log -4 --pretty=format:"- %s (%h)" >> last_commits.txt
       - name: Determine next tag
         id: tag_version
         run: |
