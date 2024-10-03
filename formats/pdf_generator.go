@@ -24,32 +24,62 @@ func GeneratePDF(resume models.Resume, filename string) error {
 		return err
 	}
 
-	pdf.Cell(nil, "Resume")
+	err = pdf.Cell(nil, "Resume")
+	if err != nil {
+		log.Print(err.Error())
+		return err
+	}
 	pdf.Br(20)
 
 	if resume.Name != nil {
-		pdf.Cell(nil, "Name: "+*resume.Name)
+		err = pdf.Cell(nil, "Name: "+*resume.Name)
+		if err != nil {
+			log.Print(err.Error())
+			return err
+		}
 		pdf.Br(20)
 	}
+
 	if resume.Phone != nil {
-		pdf.Cell(nil, "Phone: "+*resume.Phone)
+		err = pdf.Cell(nil, "Phone: "+*resume.Phone)
+		if err != nil {
+			log.Print(err.Error())
+			return err
+		}
 		pdf.Br(20)
 	}
+
 	if resume.Email != nil {
-		pdf.Cell(nil, "Email: "+*resume.Email)
+		err = pdf.Cell(nil, "Email: "+*resume.Email)
+		if err != nil {
+			log.Print(err.Error())
+			return err
+		}
 		pdf.Br(20)
 	}
 
 	if len(resume.Experience) > 0 {
-		pdf.Cell(nil, "Experience:")
+		err = pdf.Cell(nil, "Experience:")
+		if err != nil {
+			log.Print(err.Error())
+			return err
+		}
 		pdf.Br(20)
 		for _, exp := range resume.Experience {
 			if exp.Role != nil {
-				pdf.Cell(nil, "Role: "+*exp.Role)
+				err = pdf.Cell(nil, "Role: "+*exp.Role)
+				if err != nil {
+					log.Print(err.Error())
+					return err
+				}
 				pdf.Br(15)
 			}
 			if exp.Company != nil {
-				pdf.Cell(nil, "Company: "+*exp.Company)
+				err = pdf.Cell(nil, "Company: "+*exp.Company)
+				if err != nil {
+					log.Print(err.Error())
+					return err
+				}
 				pdf.Br(15)
 			}
 		}
