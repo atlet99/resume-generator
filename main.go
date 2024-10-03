@@ -6,10 +6,10 @@ import (
 	"strings"
 	"text/template"
 
-	"github.com/atlet99/resume-generator/resume-generator/env"
-	"github.com/atlet99/resume-generator/resume-generator/formats"
-	"github.com/atlet99/resume-generator/resume-generator/models"
-	"github.com/atlet99/resume-generator/resume-generator/utils"
+	"github.com/atlet99/resume-generator/env"
+	"github.com/atlet99/resume-generator/formats"
+	"github.com/atlet99/resume-generator/models"
+	"github.com/atlet99/resume-generator/utils"
 )
 
 func main() {
