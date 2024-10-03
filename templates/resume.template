@@ -1,0 +1,19 @@
+# Resume Template
+
+FORMAT: {{.Format}}
+
+Name: {{.Name}}
+Phone: {{.Phone}}
+Email: {{.Email}}
+
+## Technical Skills
+{{ if .TechnicalSkills }}{{.TechnicalSkills}}{{end}}
+
+## Experience
+{{range .Experience}}
+Role: {{.Role}} | Company: {{.Company}} | Location: {{.Location}} | Dates: {{.Dates}}
+- {{.Description}}
+{{end}}
+
+## Education
+{{ if .Education }}{{.Education}}{{end}}
