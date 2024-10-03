@@ -1,5 +1,9 @@
 package main
 
+import (
+	"fmt"
+)
+
 func main() {
 	resume := Resume{
 		PersonalDetails: PersonalDetails{
@@ -35,10 +39,18 @@ func main() {
 		Languages: []string{"English", "Spanish"},
 	}
 
-	err := generateResume(resume)
+	docxFilename := fmt.Sprintf("%s.docx", resume.PersonalDetails.Name)
+	pdfFilename := fmt.Sprintf("%s.pdf", resume.PersonalDetails.Name)
+
+	err := generateResumeDocx(resume, docxFilename)
 	if err != nil {
 		panic(err)
 	}
 
-	println("Resume generated successfully!")
+	err = generateResumePDF(resume, pdfFilename)
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Printf("Resume generated successfully! Files saved to %s and %s\n", docxFilename, pdfFilename)
 }
