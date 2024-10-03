@@ -1,4 +1,4 @@
-module resume-generator
+module github.com/atlet99/resume-generator
 
 go 1.23.1
 

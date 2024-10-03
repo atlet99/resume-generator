@@ -3,12 +3,13 @@ package main
 import (
 	"log"
 	"os"
-	"resume-generator/env"
-	"resume-generator/formats"
-	"resume-generator/models"
-	"resume-generator/utils"
 	"strings"
 	"text/template"
+
+	"github.com/atlet99/resume-generator/env"
+	"github.com/atlet99/resume-generator/formats"
+	"github.com/atlet99/resume-generator/models"
+	"github.com/atlet99/resume-generator/utils"
 )
 
 func main() {

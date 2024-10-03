@@ -3,7 +3,8 @@ package env
 import (
 	"fmt"
 	"os"
-	"resume-generator/models"
+
+	"github.com/atlet99/resume-generator/models"
 
 	"github.com/joho/godotenv"
 )
