@@ -2,20 +2,26 @@ package main
 
 import (
 	"log"
+	"os"
 	"resume-generator/env"
 	"resume-generator/formats"
 	"resume-generator/models"
 	"resume-generator/utils"
+	"strings"
+	"text/template"
 )
 
 func main() {
-	// Загружаем .env файл
 	err := env.LoadEnv(".template.env")
 	if err != nil {
 		log.Fatalf("Error loading .env file: %v", err)
 	}
 
-	// Собираем данные для резюме
+	experience, err := env.GetExperience()
+	if err != nil {
+		log.Fatalf("Error loading experience: %v", err)
+	}
+
 	resume := models.Resume{
 		Name:            env.GetEnv("NAME"),
 		Phone:           env.GetEnv("PHONE"),
@@ -23,7 +29,7 @@ func main() {
 		LinkedIn:        env.GetEnv("LINKEDIN"),
 		GitHub:          env.GetEnv("GITHUB"),
 		TechnicalSkills: env.GetEnv("TECHNICAL_SKILLS"),
-		Experience:      env.GetExperience(),
+		Experience:      experience,
 		Education:       env.GetEnv("EDUCATION"),
 	}
 
@@ -32,15 +38,62 @@ func main() {
 		log.Fatalf("Validation error: %v", err)
 	}
 
-	err = formats.GeneratePDF(resume, "generated_resume.pdf")
+	format, err := extractFormatFromTemplate("templates/resume.template")
 	if err != nil {
-		log.Fatalf("Error generating PDF: %v", err)
+		log.Fatalf("Error extracting format from template: %v", err)
 	}
 
-	err = formats.GenerateDOC(resume, "generated_resume.docx")
-	if err != nil {
-		log.Fatalf("Error generating DOC: %v", err)
+	if format == "" {
+		format = "BOTH"
 	}
 
-	log.Println("Resume generated successfully in both PDF and DOC formats.")
+	switch strings.ToUpper(format) {
+	case "PDF":
+		generateResumeInFormat(resume, "pdf", "generated_resume.pdf")
+	case "DOC":
+		generateResumeInFormat(resume, "docx", "generated_resume.docx")
+	case "BOTH":
+		generateResumeInFormat(resume, "pdf", "generated_resume.pdf")
+		generateResumeInFormat(resume, "docx", "generated_resume.docx")
+	default:
+		log.Fatalf("Invalid format specified in template: %v", format)
+	}
+}
+
+func generateResumeInFormat(resume models.Resume, format string, filename string) {
+	var err error
+	switch format {
+	case "pdf":
+		err = formats.GeneratePDF(resume, filename)
+	case "docx":
+		err = formats.GenerateDOC(resume, filename)
+	default:
+		log.Fatalf("Invalid format: %v", format)
+	}
+
+	if err != nil {
+		log.Fatalf("Error generating %s: %v", format, err)
+	}
+
+	log.Printf("Resume generated successfully in %s format.\n", format)
+}
+
+func extractFormatFromTemplate(templateFile string) (string, error) {
+	tmpl, err := template.ParseFiles(templateFile)
+	if err != nil {
+		return "", err
+	}
+
+	data := struct {
+		Format string
+	}{
+		Format: "",
+	}
+
+	err = tmpl.Execute(os.Stdout, &data)
+	if err != nil {
+		return "", err
+	}
+
+	return data.Format, nil
 }
