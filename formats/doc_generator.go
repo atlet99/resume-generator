@@ -2,7 +2,8 @@ package formats
 
 import (
 	"log"
-	"resume-generator/models"
+
+	"github.com/atlet99/resume-generator/models"
 
 	"github.com/unidoc/unioffice/document"
 )

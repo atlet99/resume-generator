@@ -2,7 +2,8 @@ package utils
 
 import (
 	"fmt"
-	"resume-generator/models"
+
+	"github.com/atlet99/resume-generator/models"
 )
 
 func ValidateMandatoryFields(resume models.Resume) error {
