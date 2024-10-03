@@ -1,0 +1,14 @@
+{{ if .Name }}Name: {{.Name}}{{end}}
+{{ if .Phone }}Phone: {{.Phone}}{{end}} | {{ if .Email }}Email: {{.Email}}{{end}} | {{ if .LinkedIn }}LinkedIn: {{.LinkedIn}}{{end}} | {{ if .GitHub }}GitHub: {{.GitHub}}{{end}}
+
+## Technical Skills
+{{ if .TechnicalSkills }}{{.TechnicalSkills}}{{end}}
+
+## Experience
+{{range .Experience}}
+{{ if .Role }}**Role**: {{.Role}}{{end}} | {{ if .Company }}**Company**: {{.Company}}{{end}} | {{ if .Location }}**Location**: {{.Location}}{{end}} | {{ if .Dates }}**Dates**: {{.Dates}}{{end}}
+- {{ if .Description }}{{.Description}}{{end}}
+{{end}}
+
+## Education
+{{ if .Education }}{{.Education}}{{end}}
