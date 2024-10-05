@@ -92,3 +92,24 @@ jobs:
         with:
           body_path: last_commits.txt
           tag_name: ${{ env.TAG_NAME }}
+      - name: Import GPG key
+        run: |
+          echo "${{ secrets.GPG_PRIVATE_KEY }}" | gpg --batch --import
+          echo "use-agent" >> ~/.gnupg/gpg.conf
+          echo "pinentry-mode loopback" >> ~/.gnupg/gpg.conf
+          echo RELOADAGENT | gpg-connect-agent
+      - name: Sign release assets
+        run: |
+          RELEASE_ASSETS=$(curl -s https://api.github.com/repos/${{ github.repository }}/releases/${{ github.event.release.id }}/assets | jq -r '.[] | select(.name != "source code") | .url')
+          for asset_url in $RELEASE_ASSETS; do
+            curl -sSL -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Accept: application/octet-stream" $asset_url -o asset
+    
+            gpg --detach-sign -a asset
+            asset_name=$(basename $asset_url)
+            curl -X POST -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+              -H "Content-Type: application/octet-stream" \
+              --data-binary @asset.sig \
+              "https://uploads.github.com/repos/${{ github.repository }}/releases/${{ github.event.release.id }}/assets?name=${asset_name}.asc"
+          done
+    
