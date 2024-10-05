@@ -137,3 +137,25 @@ jobs:
               --data-binary @asset.sig \
               "https://uploads.github.com/repos/${{ github.repository }}/releases/${{ env.RELEASE_ID }}/assets?name=${asset_name}.asc"
           done
+
+      - name: Sign and Upload Source Code Assets
+        run: |
+          for asset_name in "source code.zip" "source code.tar.gz"; do
+            asset_url=$(curl -s https://api.github.com/repos/${{ github.repository }}/releases/${{ env.RELEASE_ID }}/assets | jq -r '.[] | select(.name == "'$asset_name'") | .url')
+          
+            if [ -n "$asset_url" ]; then
+              echo "Downloading and signing asset: $asset_name"
+              curl -sSL -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+              -H "Accept: application/octet-stream" $asset_url -o asset
+
+              gpg --detach-sign -a asset
+
+              echo "Uploading signature for $asset_name"
+              curl -X POST -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+                -H "Content-Type: application/octet-stream" \
+                --data-binary @asset.sig \
+                "https://uploads.github.com/repos/${{ github.repository }}/releases/${{ env.RELEASE_ID }}/assets?name=${asset_name}.asc"
+            else
+              echo "No asset found for $asset_name"
+            fi
+          done
