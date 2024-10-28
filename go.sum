@@ -8,5 +8,5 @@ github.com/richardlehane/msoleps v1.0.3 h1:aznSZzrwYRl3rLKRT3gUk9am7T/mLNSnJINvN
 github.com/richardlehane/msoleps v1.0.3/go.mod h1:BWev5JBpU9Ko2WAgmZEuiz4/u3ZYTKbjLycmwiWUfWg=
 github.com/signintech/gopdf v0.28.0 h1:zCUlRuedALiKaZmEdLSoA4EPqjpnzLBP6co8fjA6C7Q=
 github.com/signintech/gopdf v0.28.0/go.mod h1:d23eO35GpEliSrF22eJ4bsM3wVeQJTjXTHq5x5qGKjA=
-github.com/unidoc/unioffice v1.36.0 h1:9kEUK3hQhVAB7g3lROsvCrSMZsxSwFmC1UiMox7RohQ=
-github.com/unidoc/unioffice v1.36.0/go.mod h1:VL/S9i/xd2zYqZCUzO6CFPr3kM4iKj/tLcEcthAilgU=
+github.com/unidoc/unioffice v1.37.0 h1:dQLm0UEhIYiRPkxWCGsDYZQAcSXv4oMIUknTPNKizvA=
+github.com/unidoc/unioffice v1.37.0/go.mod h1:VL/S9i/xd2zYqZCUzO6CFPr3kM4iKj/tLcEcthAilgU=
