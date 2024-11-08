@@ -43,7 +43,7 @@ jobs:
           severity: 'CRITICAL,HIGH'
           output: 'trivy-results.sarif'
       - name: Upload Trivy scan results to GitHub Security tab
-        uses: github/codeql-action/upload-sarif@662472033e021d55d94146f66f6058822b0b39fd # v3.27.0
+        uses: github/codeql-action/upload-sarif@4f3212b61783c3c68e8309a0f18a699764811cda # v3.27.1
         with:
           sarif_file: 'trivy-results.sarif'
         env:
@@ -81,7 +81,7 @@ jobs:
         with:
           args: --sarif-file-output=snyk-results.sarif
       - name: Upload result to GitHub Code Scanning
-        uses: github/codeql-action/upload-sarif@662472033e021d55d94146f66f6058822b0b39fd # v3.27.0
+        uses: github/codeql-action/upload-sarif@4f3212b61783c3c68e8309a0f18a699764811cda # v3.27.1
         with:
           sarif_file: 'snyk-results.sarif'
 
@@ -144,6 +144,6 @@ jobs:
           path: 'ossf-results.sarif'
           retention-days: 5
       - name: Upload result to GitHub Code Scanning
-        uses: github/codeql-action/upload-sarif@662472033e021d55d94146f66f6058822b0b39fd # v3.27.0
+        uses: github/codeql-action/upload-sarif@4f3212b61783c3c68e8309a0f18a699764811cda # v3.27.1
         with:
           sarif_file: 'ossf-results.sarif'
