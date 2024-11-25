@@ -5,7 +5,7 @@ go 1.23.1
 require (
 	github.com/joho/godotenv v1.5.1
 	github.com/signintech/gopdf v0.28.0
-	github.com/unidoc/unioffice v1.36.0
+	github.com/unidoc/unioffice v1.38.0
 )
 
 require github.com/richardlehane/msoleps v1.0.3 // indirect
